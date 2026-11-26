@@ -113,11 +113,11 @@ while (Date.now() - t0 < SEC * 1000) {
   const kbps = ((bytes - lastBytes) * 8) / 1000 / ((now - lastT) / 1000) / N_ALL;
   lastBytes = bytes;
   lastT = now;
-  samples.push({ worst: m.valdor_field_step_max_ms ?? 0, step: m.valdor_field_step_ms, rss: m.valdor_rss_bytes / 1048576, kbps });
-  console.log(`t=${Math.round((now - t0) / 1000)}s step=${m.valdor_field_step_ms.toFixed(2)}ms worst=${(m.valdor_field_step_max_ms ?? 0).toFixed(1)}ms rss=${(m.valdor_rss_bytes / 1048576).toFixed(0)}MB down/bot=${kbps.toFixed(1)}kbps mobsVisible(avg)=${(bots.reduce((s, b) => s + (b.room.state?.mobs?.size ?? 0), 0) / N_ALL).toFixed(1)} crossings=${crossings}`);
+  samples.push({ gc: m.valdor_gc_max_ms ?? 0, db: m.valdor_flush_max_ms ?? 0, worst: m.valdor_field_step_max_ms ?? 0, step: m.valdor_field_step_ms, rss: m.valdor_rss_bytes / 1048576, kbps });
+  console.log(`t=${Math.round((now - t0) / 1000)}s step=${m.valdor_field_step_ms.toFixed(2)}ms worst=${(m.valdor_field_step_max_ms ?? 0).toFixed(1)}ms gc=${(m.valdor_gc_max_ms ?? 0).toFixed(1)}ms db=${(m.valdor_flush_max_ms ?? 0).toFixed(1)}ms rss=${(m.valdor_rss_bytes / 1048576).toFixed(0)}MB down/bot=${kbps.toFixed(1)}kbps mobsVisible(avg)=${(bots.reduce((s, b) => s + (b.room.state?.mobs?.size ?? 0), 0) / N_ALL).toFixed(1)} crossings=${crossings}`);
 }
 clearInterval(tick);
 const avg = (k) => samples.reduce((s, x) => s + x[k], 0) / samples.length;
-console.log(`RESULT bots=${N_ALL} (outskirts ${N}, highlands ${HI}, shuttles ${SH}) crossings=${crossings} rooms=${rooms.size} step_ms_avg=${avg('step').toFixed(2)} step_ms_max=${Math.max(...samples.map((s) => s.step)).toFixed(2)} worst_step_ms=${Math.max(...samples.map((s) => s.worst)).toFixed(1)} stalls_over_100ms=${samples.filter((s) => s.worst > 100).length}/${samples.length} rss_max=${Math.max(...samples.map((s) => s.rss)).toFixed(0)}MB down_per_bot_kbps=${avg('kbps').toFixed(1)} total_down_mbps=${((avg('kbps') * N_ALL) / 1000).toFixed(2)}`);
+console.log(`RESULT bots=${N_ALL} (outskirts ${N}, highlands ${HI}, shuttles ${SH}) crossings=${crossings} rooms=${rooms.size} step_ms_avg=${avg('step').toFixed(2)} step_ms_max=${Math.max(...samples.map((s) => s.step)).toFixed(2)} worst_step_ms=${Math.max(...samples.map((s) => s.worst)).toFixed(1)} stalls_over_100ms=${samples.filter((s) => s.worst > 100).length}/${samples.length} gc_max_ms=${Math.max(...samples.map((s) => s.gc)).toFixed(1)} db_max_ms=${Math.max(...samples.map((s) => s.db)).toFixed(1)} rss_max=${Math.max(...samples.map((s) => s.rss)).toFixed(0)}MB down_per_bot_kbps=${avg('kbps').toFixed(1)} total_down_mbps=${((avg('kbps') * N_ALL) / 1000).toFixed(2)}`);
 for (const b of bots) await b.room.leave().catch(() => {});
 process.exit(0);
