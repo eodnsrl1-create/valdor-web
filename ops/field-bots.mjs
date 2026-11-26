@@ -13,7 +13,12 @@ const HI = Number(process.argv[5] ?? 0);
 const SH = Number(process.argv[6] ?? 0);
 const http = url.replace(/^ws/, 'http');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const metric = async () => Object.fromEntries((await (await fetch(`${http}/metrics`)).text()).trim().split('\n').map((l) => l.split(' ')).map(([k, v]) => [k, Number(v)]));
+const metric = async () => {
+  // /metrics answers loopback callers only (or METRICS_TOKEN): run the server with --network host, or pass METRICS_TOKEN
+  const r = await fetch(`${http}/metrics`, { headers: process.env.METRICS_TOKEN ? { authorization: `Bearer ${process.env.METRICS_TOKEN}` } : {} });
+  if (!r.ok) throw new Error(`/metrics ${r.status}: start the server with --network host (loopback) or set METRICS_TOKEN on both sides`);
+  return Object.fromEntries((await r.text()).trim().split('\n').map((l) => l.split(' ')).map(([k, v]) => [k, Number(v)]));
+};
 
 const bots = [];
 let bytes = 0;
