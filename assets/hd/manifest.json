@@ -43,6 +43,13 @@
     "spr_npc_town_48.png",
     "ui_icon_astral_items_24.png",
     "ui_portrait_4classes_64.png",
-    "vfx_skills_hd_64.png"
+    "vfx_skills_hd_64.png",
+    "icons_hud_32.png",
+    "itemicon3.png",
+    "fx_drop_beam_epic.png",
+    "fx_drop_beam_legendary.png",
+    "fx_drop_burst_32.png",
+    "fx_enh_success.png",
+    "fx_enh_fail.png"
   ]
 }
