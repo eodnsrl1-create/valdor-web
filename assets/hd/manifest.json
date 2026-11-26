@@ -61,6 +61,15 @@
     "fx_skl_mana_surge.png",
     "fx_skl_iron_will.png",
     "fx_skl_tactical_roll.png",
-    "fx_crit_hit_32.png"
+    "fx_crit_hit_32.png",
+    "spr_boss_boreas_160.png",
+    "bg_arena_boreas.jpg",
+    "bg_arena_boreas_overlay.png",
+    "bg_field_frost_ground.jpg",
+    "bg_field_frost_overlay.png",
+    "spr_mob_frost_stalker_48.png",
+    "spr_mob_glacial_sentinel_48.png",
+    "spr_mob_blizzard_acolyte_48.png",
+    "spr_mob_abyss_yeti_48.png"
   ]
 }
