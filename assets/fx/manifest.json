@@ -1,0 +1,152 @@
+{
+ "pixelfx": "5294518ce7c72e48b6100a744596e0acf57f2826",
+ "fps": 15,
+ "credits": "pixelfx (MIT) \u00a9 Patch \u00b7 effects adapted from Sprite Fusion by Hugo Duprez (MIT) \u00b7 acting from Hollow Crown (MIT)",
+ "fx": {
+  "hit": {
+   "id": "impacts/hit-spark",
+   "fw": 112,
+   "fh": 68,
+   "frames": 9,
+   "fps": 15,
+   "loop": false,
+   "pivot": [
+    27,
+    56
+   ],
+   "hits": [],
+   "kb": 3
+  },
+  "crit": {
+   "id": "impacts/crit-hit",
+   "fw": 161,
+   "fh": 119,
+   "frames": 15,
+   "fps": 15,
+   "loop": false,
+   "pivot": [
+    65,
+    91
+   ],
+   "hits": [],
+   "kb": 11
+  },
+  "beam_epic": {
+   "id": "pickups/loot-beam",
+   "fw": 61,
+   "fh": 167,
+   "frames": 36,
+   "fps": 15,
+   "loop": true,
+   "pivot": [
+    30,
+    159
+   ],
+   "hits": [],
+   "kb": 32
+  },
+  "beam_leg": {
+   "id": "pickups/loot-beam",
+   "fw": 61,
+   "fh": 167,
+   "frames": 36,
+   "fps": 15,
+   "loop": true,
+   "pivot": [
+    30,
+    159
+   ],
+   "hits": [],
+   "kb": 35
+  },
+  "chest": {
+   "id": "pickups/chest-open",
+   "fw": 167,
+   "fh": 77,
+   "frames": 70,
+   "fps": 15,
+   "loop": false,
+   "pivot": [
+    85,
+    63
+   ],
+   "hits": [],
+   "kb": 55
+  },
+  "heal": {
+   "id": "holy/heal",
+   "fw": 44,
+   "fh": 82,
+   "frames": 30,
+   "fps": 15,
+   "loop": false,
+   "pivot": [
+    22,
+    71
+   ],
+   "hits": [],
+   "kb": 12
+  },
+  "icering": {
+   "id": "fire/fire-ring",
+   "fw": 122,
+   "fh": 105,
+   "frames": 60,
+   "fps": 15,
+   "loop": false,
+   "pivot": [
+    61,
+    71
+   ],
+   "hits": [
+    {
+     "t": 0.32,
+     "freeze": 0.1,
+     "shake": 0.28,
+     "amp": 3,
+     "push": 0
+    },
+    {
+     "t": 0.6,
+     "freeze": 0,
+     "shake": 0,
+     "amp": 0,
+     "push": 1.2,
+     "skin": "char"
+    },
+    {
+     "t": 3.5,
+     "freeze": 0,
+     "shake": 0,
+     "amp": 0,
+     "push": 0,
+     "skin": null
+    }
+   ],
+   "kb": 40
+  },
+  "levelup": {
+   "id": "ui/level-up",
+   "fw": 156,
+   "fh": 135,
+   "frames": 49,
+   "fps": 15,
+   "loop": false,
+   "pivot": [
+    78,
+    112
+   ],
+   "hits": [
+    {
+     "t": 0.28,
+     "freeze": 0.05,
+     "shake": 0.14,
+     "amp": 2,
+     "push": 1.2
+    }
+   ],
+   "kb": 55
+  }
+ },
+ "totalKb": 243
+}
