@@ -89,13 +89,13 @@
   },
   "icering": {
    "id": "fire/fire-ring",
-   "fw": 122,
+   "fw": 180,
    "fh": 105,
    "frames": 60,
    "fps": 15,
    "loop": false,
    "pivot": [
-    61,
+    90,
     71
    ],
    "hits": [
@@ -123,7 +123,7 @@
      "skin": null
     }
    ],
-   "kb": 40
+   "kb": 65
   },
   "levelup": {
    "id": "ui/level-up",
@@ -148,5 +148,5 @@
    "kb": 55
   }
  },
- "totalKb": 243
+ "totalKb": 268
 }
