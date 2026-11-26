@@ -50,6 +50,8 @@
     "fx_drop_beam_legendary.png",
     "fx_drop_burst_32.png",
     "fx_enh_success.png",
-    "fx_enh_fail.png"
+    "fx_enh_fail.png",
+    "icon_skill_book.png",
+    "icon_mat_skill_page.png"
   ]
 }
