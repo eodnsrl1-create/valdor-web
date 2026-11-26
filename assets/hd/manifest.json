@@ -52,6 +52,14 @@
     "fx_enh_success.png",
     "fx_enh_fail.png",
     "icon_skill_book.png",
-    "icon_mat_skill_page.png"
+    "icon_mat_skill_page.png",
+    "fx_skl_chain_lightning.png",
+    "fx_skl_smite_ray.png",
+    "fx_skl_sanctuary_ward.png",
+    "fx_skl_battle_cry.png",
+    "fx_skl_wind_step.png",
+    "fx_skl_mana_surge.png",
+    "fx_skl_iron_will.png",
+    "fx_skl_tactical_roll.png"
   ]
 }
