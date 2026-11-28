@@ -1,0 +1,36 @@
+# D107 안 A (OWNER 채택): 새 화면은 'next' 브랜치에 먼저 올라오고, NAS 서버(/healthz)의 게임 데이터 해시가
+# 새 화면과 같아지면 그때 'main'(GitHub Pages)으로 승격한다. 해시가 같은 배포(P1)는 즉시 승격된다.
+# 서버가 아직 옛 버전이면 웹도 옛 버전에 머물러 화면-서버 불일치(던전 입장 차단)가 생기지 않는다.
+name: promote
+on:
+  push:
+    branches: [next]
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: promote
+  cancel-in-progress: false
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: next
+          fetch-depth: 0
+      - id: chk
+        env:
+          HEALTHZ: https://dnsrl.taild67872.ts.net/healthz
+        run: |
+          git fetch -q origin main
+          if [ "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)" ]; then echo "already live"; exit 0; fi
+          want=$(jq -r .gamedata deploy.json)
+          live=$(curl -fsS --max-time 15 "$HEALTHZ" | jq -r .gamedata 2>/dev/null || true)
+          echo "web(next)=$(jq -r .version deploy.json) want=$want live=${live:-unreachable}"
+          if [ -n "$live" ] && [ "$want" = "$live" ]; then echo "go=1" >> "$GITHUB_OUTPUT";
+          else echo "::notice::NAS 서버 게임 데이터가 새 화면과 달라 웹 배포 대기 중 (NAS 업데이트 후 10분 안에 자동 배포)"; fi
+      - if: steps.chk.outputs.go == '1'
+        run: git push origin HEAD:main
