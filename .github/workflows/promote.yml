@@ -28,9 +28,14 @@ jobs:
           git fetch -q origin main
           if [ "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)" ]; then echo "already live"; exit 0; fi
           want=$(jq -r .gamedata deploy.json)
-          live=$(curl -fsS --max-time 15 "$HEALTHZ" | jq -r .gamedata 2>/dev/null || true)
-          echo "web(next)=$(jq -r .version deploy.json) want=$want live=${live:-unreachable}"
-          if [ -n "$live" ] && [ "$want" = "$live" ]; then echo "go=1" >> "$GITHUB_OUTPUT";
-          else echo "::notice::NAS 서버 게임 데이터가 새 화면과 달라 웹 배포 대기 중 (NAS 업데이트 후 10분 안에 자동 배포)"; fi
+          # GitHub cron은 수십 분씩 밀리거나 건너뛰므로, next push 직후 최대 90분 동안 1분 간격으로 직접 확인한다.
+          tries=1; [ "${{ github.event_name }}" = "push" ] && tries=90
+          for i in $(seq 1 $tries); do
+            live=$(curl -fsS --max-time 15 "$HEALTHZ" | jq -r .gamedata 2>/dev/null || true)
+            echo "[$i/$tries] web(next)=$(jq -r .version deploy.json) want=${want:0:12} live=${live:0:12}"
+            if [ -n "$live" ] && [ "$want" = "$live" ]; then echo "go=1" >> "$GITHUB_OUTPUT"; exit 0; fi
+            [ $i -lt $tries ] && sleep 60
+          done
+          echo "::notice::NAS 서버 게임 데이터가 새 화면과 달라 웹 배포 대기 중 (cron/수동 실행으로 재확인)"
       - if: steps.chk.outputs.go == '1'
         run: git push origin HEAD:main
